@@ -8,8 +8,8 @@ module add clhep/${CLHEP_VERSION}
 cd ${WORKSPACE}/${VERSION}/build-${BUILD_NUMBER}
 echo "All tests have passed, will now build into ${SOFT_DIR}"
 rm -rf *
-cmake ${WORKSPACE}/${VERSION}/$(echo ${NAME}| tr '[:lower:]' '[:upper:]') -G"Unix Makefiles" \
-   -DCMAKE_INSTALL_PREFIX=${SOFT_DIR}\ 
+cmake ${WORKSPACE}/${VERSION}/ -G"Unix Makefiles" \
+   -DCMAKE_INSTALL_PREFIX=${SOFT_DIR}\
    -DGEANT4_INSTALL_DATA_TIMEOUT=1500                \
    -DCMAKE_CXX_FLAGS="-fPIC"                         \
    -DCMAKE_INSTALL_LIBDIR="lib"   \
@@ -25,7 +25,7 @@ cmake ${WORKSPACE}/${VERSION}/$(echo ${NAME}| tr '[:lower:]' '[:upper:]') -G"Uni
    -DGEANT4_USE_G3TOG4=ON  \
    -DGEANT4_INSTALL_DATA=ON  \
    -DGEANT4_USE_SYSTEM_EXPAT=OFF
-  
+
 make -j2 install
 
 echo "Creating the modules file directory ${HEP_MODULES}"
