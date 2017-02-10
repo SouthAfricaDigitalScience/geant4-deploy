@@ -4,7 +4,7 @@ module add ci
 module add cmake
 module add clhep/${CLHEP_VERSION}
 
-cd ${WORKSPACE}/${NAME}${VERSION}/build-${BUILD_NUMBER}
+cd ${WORKSPACE}/geant${VERSION}/build-${BUILD_NUMBER}
 make test
 
 echo $?
