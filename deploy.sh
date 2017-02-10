@@ -5,10 +5,10 @@ module add deploy
 module add cmake
 module add clhep/${CLHEP_VERSION}
 
-cd ${WORKSPACE}/${NAME}${VERSION}/build-${BUILD_NUMBER}
+cd ${WORKSPACE}/geant${VERSION}/build-${BUILD_NUMBER}
 echo "All tests have passed, will now build into ${SOFT_DIR}"
 rm -rf *
-cmake ${WORKSPACE}/${NAME}${VERSION}/ -G"Unix Makefiles" \
+cmake ${WORKSPACE}/geant${VERSION}/ -G"Unix Makefiles" \
    -DCMAKE_INSTALL_PREFIX=${SOFT_DIR}\
    -DGEANT4_INSTALL_DATA_TIMEOUT=1500                \
    -DCMAKE_CXX_FLAGS="-fPIC"                         \
