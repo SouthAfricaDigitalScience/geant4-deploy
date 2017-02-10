@@ -1,6 +1,6 @@
 [![Build Status](https://ci.sagrid.ac.za/job/geant4-deploy/badge/icon)](https://ci.sagrid.ac.za/job/geant4-deploy)
 
-# clhep-deploy
+# geant4-deploy
 
 Build scripts and tests for the [Geant4](https://geant4.cern.ch/) for CODE-RADE
 
@@ -18,6 +18,7 @@ This project depends on
 We build the following versions :
 
   * 10.3.0
+  * 10.1.3
 
 # Configuration
 
