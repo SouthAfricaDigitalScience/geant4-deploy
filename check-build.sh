@@ -2,6 +2,7 @@
 . /etc/profile.d/modules.sh
 module add ci
 module add cmake
+module add clhep/${CLHEP_VERSION}
 cd ${WORKSPACE}/${VERSION}/build-${BUILD_NUMBER}
 make test
 

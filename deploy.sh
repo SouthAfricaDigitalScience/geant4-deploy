@@ -3,6 +3,8 @@
 . /etc/profile.d/modules.sh
 module add deploy
 module add cmake
+module add clhep/${CLHEP_VERSION}
+
 cd ${WORKSPACE}/${VERSION}/build-${BUILD_NUMBER}
 echo "All tests have passed, will now build into ${SOFT_DIR}"
 rm -rf *
