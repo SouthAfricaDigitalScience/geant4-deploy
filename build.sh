@@ -29,11 +29,11 @@ else
   echo "continuing from previous builds, using source at " ${SRC_DIR}/${SOURCE_FILE}
 fi
 tar xzf  ${SRC_DIR}/${SOURCE_FILE} -C ${WORKSPACE} --skip-old-files
-mkdir -p ${WORKSPACE}/${VERSION}/build-${BUILD_NUMBER}
-cd ${WORKSPACE}/${VERSION}/build-${BUILD_NUMBER}
+mkdir -p ${WORKSPACE}/${NAME}${VERSION}/build-${BUILD_NUMBER}
+cd ${WORKSPACE}/${NAME}${VERSION}/build-${BUILD_NUMBER}
 # This CMake doesn't allow in-source build
 cmake ${WORKSPACE}/${VERSION} -G"Unix Makefiles" \
-   -DCMAKE_INSTALL_PREFIX=${SOFT_DIR}\ 
+   -DCMAKE_INSTALL_PREFIX=${SOFT_DIR}\
    -DGEANT4_INSTALL_DATA_TIMEOUT=1500                \
    -DCMAKE_CXX_FLAGS="-fPIC"                         \
    -DCMAKE_INSTALL_LIBDIR="lib"     \
