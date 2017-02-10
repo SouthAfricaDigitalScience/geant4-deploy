@@ -4,7 +4,7 @@
 module add ci
 module add cmake
 module add gcc
-module add clhep/2.3.4.3
+module add clhep/${CLHEP_VERSION}
 
 SOURCE_FILE=${NAME}.${VERSION}.tar.gz
 
