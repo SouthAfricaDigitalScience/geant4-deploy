@@ -32,8 +32,8 @@ tar xzf  ${SRC_DIR}/${SOURCE_FILE} -C ${WORKSPACE} --skip-old-files
 mkdir -p ${WORKSPACE}/${VERSION}/build-${BUILD_NUMBER}
 cd ${WORKSPACE}/${VERSION}/build-${BUILD_NUMBER}
 # This CMake doesn't allow in-source build
-cmake ${WORKSPACE}/${VERSION}/$(echo ${NAME}| tr '[:lower:]' '[:upper:]') -G"Unix Makefiles" \
-   -DCMAKE_INSTALL_PREFIX=${SOFT_DIR}\ 
+cmake ${WORKSPACE}/${VERSION}  -G"Unix Makefiles" \
+   -DCMAKE_INSTALL_PREFIX=${SOFT_DIR}\
    -DGEANT4_INSTALL_DATA_TIMEOUT=1500                \
    -DCMAKE_CXX_FLAGS="-fPIC"                         \
    -DCMAKE_INSTALL_LIBDIR="lib"     \
