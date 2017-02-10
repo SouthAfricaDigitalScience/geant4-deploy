@@ -3,7 +3,6 @@
 
 module add ci
 module add cmake
-module add gcc
 module add clhep/${CLHEP_VERSION}
 
 SOURCE_FILE=${NAME}.${VERSION}.tar.gz
