@@ -3,7 +3,8 @@
 
 module add ci
 module add cmake
-module add clhep/${CLHEP_VERSION}
+module add gcc/${GCC_VERSION}
+module add clhep/${CLHEP_VERSION}-gcc-${GCC_VERSION}
 
 SOURCE_FILE=${NAME}.${VERSION}.tar.gz
 
@@ -29,11 +30,11 @@ else
   echo "continuing from previous builds, using source at " ${SRC_DIR}/${SOURCE_FILE}
 fi
 tar xzf  ${SRC_DIR}/${SOURCE_FILE} -C ${WORKSPACE} --skip-old-files
-mkdir -p ${WORKSPACE}/geant${VERSION}/build-${BUILD_NUMBER}
-cd ${WORKSPACE}/geant${VERSION}/build-${BUILD_NUMBER}
+mkdir -p ${WORKSPACE}/${NAME}.${VERSION}/build-${BUILD_NUMBER}
+cd ${WORKSPACE}/${NAME}.${VERSION}/build-${BUILD_NUMBER}
 # This CMake doesn't allow in-source build
-cmake ${WORKSPACE}/geant${VERSION}    -G"Unix Makefiles" \
-   -DCMAKE_INSTALL_PREFIX=${SOFT_DIR}\
+cmake ${WORKSPACE}/${NAME}.${VERSION}    -G"Unix Makefiles" \
+   -DCMAKE_INSTALL_PREFIX=${SOFT_DIR}-clhep-${CLHEP_VERSION}-gcc-${GCC_VERSION} \
    -DGEANT4_INSTALL_DATA_TIMEOUT=1500                \
    -DCMAKE_CXX_FLAGS="-fPIC"                         \
    -DCMAKE_INSTALL_LIBDIR="lib"     \
@@ -42,7 +43,7 @@ cmake ${WORKSPACE}/geant${VERSION}    -G"Unix Makefiles" \
    -DGEANT4_ENABLE_TESTING=OFF    \
    -DBUILD_SHARED_LIBS=ON    \
    -DGEANT4_INSTALL_EXAMPLES=OFF   \
-   -DCLHEP_ROOT_DIR:PATH="$CLHEP_ROOT"  \
+   -DCLHEP_ROOT_DIR:PATH="${CLHEP_ROOT}"  \
    -DGEANT4_BUILD_MULTITHREADED=OFF  \
    -DCMAKE_STATIC_LIBRARY_CXX_FLAGS="-fPIC"  \
    -DCMAKE_STATIC_LIBRARY_C_FLAGS="-fPIC"  \

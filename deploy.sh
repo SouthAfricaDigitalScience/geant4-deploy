@@ -3,13 +3,14 @@
 . /etc/profile.d/modules.sh
 module add deploy
 module add cmake
-module add clhep/${CLHEP_VERSION}
+module add gcc/${GCC_VERSION}
+module add clhep/${CLHEP_VERSION}-gcc-${GCC_VERSION}
 
-cd ${WORKSPACE}/geant${VERSION}/build-${BUILD_NUMBER}
+cd ${WORKSPACE}/${NAME}.${VERSION}/build-${BUILD_NUMBER}
 echo "All tests have passed, will now build into ${SOFT_DIR}"
 rm -rf *
-cmake ${WORKSPACE}/geant${VERSION}/ -G"Unix Makefiles" \
-   -DCMAKE_INSTALL_PREFIX=${SOFT_DIR}\
+cmake ${WORKSPACE}/${NAME}.${VERSION}/ -G"Unix Makefiles" \
+   -DCMAKE_INSTALL_PREFIX=${SOFT_DIR}-clhep-${CLHEP_VERSION}-gcc-${GCC_VERSION}\
    -DGEANT4_INSTALL_DATA_TIMEOUT=1500                \
    -DCMAKE_CXX_FLAGS="-fPIC"                         \
    -DCMAKE_INSTALL_LIBDIR="lib"   \
@@ -26,11 +27,11 @@ cmake ${WORKSPACE}/geant${VERSION}/ -G"Unix Makefiles" \
    -DGEANT4_INSTALL_DATA=ON  \
    -DGEANT4_USE_SYSTEM_EXPAT=OFF
 
-make -j2 install
+make install
 
-echo "Creating the modules file directory ${HEP_MODULES}"
+echo "Creating the modules file directory ${HEP}"
 
-mkdir -p ${HEP_MODULES}/${NAME}
+mkdir -p ${HEP}/${NAME}
 mkdir -p modules
 (
 cat <<MODULE_FILE
@@ -53,7 +54,7 @@ module-whatis   "
 $NAME $VERSION : See https://github.com/SouthAfricaDigitalScience/geant4-deploy
 "
 setenv       GEANT4_VERSION       $VERSION
-setenv       GEANT4_DIR           $::env(CVMFS_DIR)/$::env(SITE)/$::env(OS)/$::env(ARCH)/$NAME/$VERSION
+setenv       GEANT4_DIR           $::env(CVMFS_DIR)/$::env(SITE)/$::env(OS)/$::env(ARCH)/$NAME/$VERSION-gcc-${GCC_VERSION}
 setenv  GEANT4BASE                $::env(GEANT4_DIR)
 setenv  G4INCLUDE               $::env(GEANT4BASE)/include/geant4
 setenv  G4INSTALL           $::env(GEANT4BASE)/src/geant4
@@ -80,9 +81,9 @@ prepend-path LDFLAGS           "-L${G4LIB}"
 MODULE_FILE
 ) > modules/$VERSION
 
-echo "HEP_MODULES/NAME is ${HEP_MODULES}/${NAME}"
-mkdir -p ${HEP_MODULES}/${NAME}
-cp -v modules/$VERSION ${HEP_MODULES}/${NAME}
+echo "HEP/NAME is ${HEP}/${NAME}"
+mkdir -p ${HEP}/${NAME}
+cp -v modules/$VERSION ${HEP}/${NAME}
 module avail ${NAME}
 module add  ${NAME}/${VERSION}
 which geant4-config
