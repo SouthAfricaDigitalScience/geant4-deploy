@@ -2,18 +2,13 @@
 . /etc/profile.d/modules.sh
 module add ci
 module add cmake
-module add clhep/${CLHEP_VERSION}
+module add gcc/${GCC_VERSION}
+module add clhep/${CLHEP_VERSION}-gcc-${GCC_VERSION}
 
-cd ${WORKSPACE}/geant${VERSION}/build-${BUILD_NUMBER}
+cd ${WORKSPACE}/${NAME}.${VERSION}/build-${BUILD_NUMBER}
 make test
 
 echo $?
-
-
-echo "--------------------- begin ci deployed env to see if things are set ----"
-env
-echo "--------------------- end ci deployed env to see if things are set ----"
-echo "bump git to get a new build"
 
 echo "Making install"
 make install
@@ -33,9 +28,9 @@ module-whatis   "
 [Nam           ] $NAME
 [Version       ] $VERSION
 [Description   ] Geant4 is a toolkit for the simulation of the passage of particles through matter. It used in particle, nuclear, accelerator, and medical physics, together with space science and right across science
-[Website       ] http://geant4.cern.ch
+[Website       ] http://${NAME}.4.cern.ch
 [Compiler      ] gcc
-[Dependencies  ] clhep ${CLHEP_VERSION}
+[Dependencies  ] clhep ${CLHEP_VERSION}-gcc-${GCC_VERSION}
 "
 setenv       GEANT4_VERSION       $VERSION
 setenv       GEANT4_DIR           /data/ci-build/$::env(SITE)/$::env(OS)/$::env(ARCH)/$NAME/$VERSION
@@ -63,10 +58,10 @@ prepend-path  PATH        $::env(HOME)/geant4/bin/Linux-g++
 prepend-path CFLAGS            "-I${G4INCLUDE}"
 prepend-path LDFLAGS           "-L${G4LIB}"
 MODULE_FILE
-) > modules/$VERSION
+) > modules/${VERSION}-gcc-${GCC_VERSION}
 
-echo "HEP_MODULES/NAME is ${HEP_MODULES}/${NAME}"
-mkdir -p ${HEP_MODULES}/${NAME}
-cp -v modules/$VERSION ${HEP_MODULES}/${NAME}
+echo "HEP/NAME is ${HEP}/${NAME}"
+mkdir -p ${HEP}/${NAME}
+cp -v modules/${VERSION}-gcc-${GCC_VERSION} ${HEP}/${NAME}
 module avail ${NAME}
-module add  ${NAME}/${VERSION}
+module add  ${NAME}/${VERSION}-gcc-${GCC_VERSION}
