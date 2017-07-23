@@ -34,6 +34,7 @@ mkdir -p ${WORKSPACE}/${NAME}.${VERSION}/build-${BUILD_NUMBER}
 cd ${WORKSPACE}/${NAME}.${VERSION}/build-${BUILD_NUMBER}
 # This CMake doesn't allow in-source build
 cmake ${WORKSPACE}/${NAME}.${VERSION}    -G"Unix Makefiles" \
+  -DGEANT4_INSTALL_DATADIR=${SOFT_DIR}/data \
    -DCMAKE_INSTALL_PREFIX=${SOFT_DIR}-clhep-${CLHEP_VERSION}-gcc-${GCC_VERSION} \
    -DGEANT4_INSTALL_DATA_TIMEOUT=1500                \
    -DCMAKE_CXX_FLAGS="-fPIC"                         \
