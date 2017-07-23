@@ -6,9 +6,7 @@ module add gcc/${GCC_VERSION}
 module add clhep/${CLHEP_VERSION}-gcc-${GCC_VERSION}
 
 cd ${WORKSPACE}/${NAME}.${VERSION}/build-${BUILD_NUMBER}
-make test
 
-echo $?
 
 echo "Making install"
 make install
