@@ -21,15 +21,15 @@ proc ModulesHelp { } {
     puts stderr "       This module does nothing but alert the user"
     puts stderr "       that the [module-info name] module is not available"
 }
-module-whatis   "
-[Category      ] physics
-[Nam           ] $NAME
-[Version       ] $VERSION
-[Description   ] Geant4 is a toolkit for the simulation of the passage of particles through matter. It used in particle, nuclear, accelerator, and medical physics, together with space science and right across science
-[Website       ] http://${NAME}.4.cern.ch
-[Compiler      ] gcc
-[Dependencies  ] clhep ${CLHEP_VERSION}-gcc-${GCC_VERSION}
-"
+#module-whatis   "
+#[Category      ] physics
+#[Nam           ] $NAME
+#[Version       ] $VERSION
+#[Description   ] Geant4 is a toolkit for the simulation of the passage of particles through matter. It used in particle, nuclear, accelerator, and medical physics, together with space science and right across science
+#[Website       ] http://${NAME}.cern.ch
+#[Compiler      ] gcc
+#[Dependencies  ] clhep ${CLHEP_VERSION}-gcc-${GCC_VERSION}
+#"
 setenv       GEANT4_VERSION       $VERSION
 setenv       GEANT4_DIR           /data/ci-build/$::env(SITE)/$::env(OS)/$::env(ARCH)/$NAME/$VERSION
 setenv  GEANT4BASE                $::env(GEANT4_DIR)
