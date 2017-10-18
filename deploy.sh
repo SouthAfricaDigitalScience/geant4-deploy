@@ -4,13 +4,12 @@
 module add deploy
 module add cmake
 module add gcc/${GCC_VERSION}
-module add clhep/${CLHEP_VERSION}-gcc-${GCC_VERSION}
 
 cd ${WORKSPACE}/${NAME}.${VERSION}/build-${BUILD_NUMBER}
 echo "All tests have passed, will now build into ${SOFT_DIR}"
 rm -rf *
 cmake ${WORKSPACE}/${NAME}.${VERSION}/ -G"Unix Makefiles" \
-   -DCMAKE_INSTALL_PREFIX=${SOFT_DIR}-clhep-${CLHEP_VERSION}-gcc-${GCC_VERSION}\
+   -DCMAKE_INSTALL_PREFIX=${SOFT_DIR}-gcc-${GCC_VERSION}\
    -DGEANT4_INSTALL_DATA_TIMEOUT=1500                \
    -DCMAKE_CXX_FLAGS="-fPIC"                         \
    -DCMAKE_INSTALL_LIBDIR="lib"   \
@@ -18,12 +17,11 @@ cmake ${WORKSPACE}/${NAME}.${VERSION}/ -G"Unix Makefiles" \
    -DGEANT4_BUILD_TLS_MODEL:STRING="global-dynamic"  \
    -DBUILD_SHARED_LIBS=ON  \
    -DGEANT4_INSTALL_EXAMPLES=OFF  \
-   -DCLHEP_ROOT_DIR:PATH="$CLHEP_ROOT"  \
    -DGEANT4_BUILD_MULTITHREADED=OFF  \
    -DCMAKE_STATIC_LIBRARY_CXX_FLAGS="-fPIC"  \
    -DCMAKE_STATIC_LIBRARY_C_FLAGS="-fPIC"  \
    -DGEANT4_USE_G3TOG4=ON  \
-   -DGEANT4_INSTALL_DATA=ON  \
+   -DGEANT4_INSTALL_DATA=NO  \
    -DGEANT4_USE_SYSTEM_EXPAT=OFF
 
 make install
@@ -42,16 +40,6 @@ proc ModulesHelp { } {
     puts stderr "       that the [module-info name] module is not available"
 }
 
-#module-whatis   "
-#[Category      ] physics
-#[Nam           ] $NAME
-#[Version       ] $VERSION
-#[Description   ] Geant4 is a toolkit for the simulation of the passage of particles through matter. It used in particle, nuclear, accelerator, and medical physics, together with space science and right across science
-#[Website       ] http://geant4.cern.ch
-#[Compiler      ] gcc
-#[Dependencies  ] clhep ${CLHEP_VERSION}
-#$NAME $VERSION : See https://github.com/SouthAfricaDigitalScience/geant4-deploy
-#"
 setenv       GEANT4_VERSION       $VERSION
 setenv       GEANT4_DIR           $::env(CVMFS_DIR)/$::env(SITE)/$::env(OS)/$::env(ARCH)/$NAME/$VERSION-gcc-${GCC_VERSION}
 setenv  GEANT4BASE                $::env(GEANT4_DIR)
