@@ -6,7 +6,7 @@ module add cmake
 module add gcc/${GCC_VERSION}
 #module add clhep/${CLHEP_VERSION}-gcc-${GCC_VERSION}
 
-SOURCE_FILE=${NAME}.${VERSION}.tar.gz
+SOURCE_FILE=${NAME}-${VERSION}.tar.gz
 #geant4-10.3-release.zip from github
 #VERSION on gitlab at CERN is v10.3.2/archive.tar.gz
 #gitlab at CERN : https://gitlab.cern.ch/geant4/geant4/repository/v10.3.2/archive.tar.gz
@@ -15,7 +15,7 @@ echo "${SOFT_DIR}"
 mkdir -p ${WORKSPACE}
 mkdir -p ${SRC_DIR}
 mkdir -p ${SOFT_DIR}
-
+exit 42
 #  Download the source file
 if [ ! -e ${SRC_DIR}/${SOURCE_FILE}.lock ] && [ ! -s ${SRC_DIR}/${SOURCE_FILE} ] ; then
   touch  ${SRC_DIR}/${SOURCE_FILE}.lock
@@ -41,7 +41,11 @@ fi
 # geant4/cmake/Modules/Geant4InstallData.cmake
 
 tar xzf  ${SRC_DIR}/${SOURCE_FILE} -C ${WORKSPACE} --skip-old-files
+#strip off the git hash at the end
+mv ${WORKSPACE}/${NAME}-${VERSION}* ${WORKSPACE}/${NAME}-${VERSION}
+
 mkdir -p ${WORKSPACE}/${NAME}.${VERSION}/build-${BUILD_NUMBER}
+
 cd ${WORKSPACE}/${NAME}.${VERSION}/build-${BUILD_NUMBER}
 # This CMake doesn't allow in-source build
 cmake ${WORKSPACE}/${NAME}.${VERSION}    -G"Unix Makefiles" \
